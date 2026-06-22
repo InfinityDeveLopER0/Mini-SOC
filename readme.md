@@ -17,3 +17,17 @@ Engineered the foundational local infrastructure environment for the Mini-SOC pr
 ### 3. ⭐ Persistent Log Architecture
 * **Implementation:** Integrated local host volume mappings (`volumes:`) directly into the orchestration layer. 
 * **Impact:** Solves the core vulnerability of stateless containers by ensuring that mission-critical security logs remain completely intact and locally auditable even across sudden container restarts or crashes.
+
+---
+
+## 🔍 Current Status & Environment Remediation (Day 2 Sprint)
+
+### 🚨 Known Issue: Registry Path Changes & Architecture Mismatches
+During initial localization testing on Windows host environments running WSL2, two key environment blockers were identified and are currently being bypassed:
+1. **Upstream Registry Deprecation (404 Not Found):** The legacy `owasp/modsecurity-crs:nginx` tag was moved/deprecated upstream on Docker Hub, causing pull failures.
+2. **Binary Execution Failures (Exit Code 255):** Docker Desktop's engine defaulted to caching ARM64 image variants (Apple Silicon) locally, triggering `exec format error` crashes when executed on standard AMD64 (Intel/AMD) Windows host hardware.
+
+### 🛠️ Active Remediation Strategy
+I am actively refactoring the orchestration layer right now with the following production-grade fixes:
+* **Registry Realignment:** Shifting the WAF source to the official GitHub Container Registry path (`ghcr.io/owasp-modsecurity/modsecurity-crs:nginx-alpine`) to bypass Docker Hub 404 limitations.
+* **Architecture Hardening:** Modifying deployment playbooks to explicitly enforce `DOCKER_DEFAULT_PLATFORM=linux/amd64` flags to suppress architecture guessing and ensure binary compatibility with the Windows/WSL2 host CPU.
