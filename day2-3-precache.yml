@@ -1,26 +1,17 @@
-version: '3.8'
-
 services:
   # Day 2 Tool: Web Application Firewall (WAF)
-  # This intercepts web attacks like SQL Injection before they hit the app
   wordpress-modsec:
     image: owasp/modsecurity-crs:nginx
+    platform: linux/amd64
     ports:
       - "8080:80"
 
   # Day 2 Tool: Identity & Access Management (IAM)
-  # This acts as the secure login gateway (SSO) for internal tools
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:24.0
+    command: start-dev
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
       - "8081:8080"
-
-  # Day 3 Tool: SOAR Automation Engine
-  # This is the workflow automation system that orchestrates immediate defense blocks
-  shuffle:
-    image: ghcr.io/shuffle/shuffle:latest
-    ports:
-      - "3001:3001"
