@@ -14,6 +14,6 @@ Engineered the foundational local infrastructure environment for the Mini-SOC pr
 * **File:** `soc_control.sh`
 * **Impact:** Developed a modular Bash utility script to manage the local lifecycle of the SOC environment, giving the team one-touch capabilities to spin up, verify, or tear down containers cleanly.
 
-### 3. ⭐ Brownie Points: Persistent Log Architecture
+### 3. ⭐ Persistent Log Architecture
 * **Implementation:** Integrated local host volume mappings (`volumes:`) directly into the orchestration layer. 
 * **Impact:** Solves the core vulnerability of stateless containers by ensuring that mission-critical security logs remain completely intact and locally auditable even across sudden container restarts or crashes.
